@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Home Page">
     @section('starting-content')
 
         <div class="w-full text-center py-32">

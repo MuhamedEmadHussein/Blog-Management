@@ -1,5 +1,10 @@
 <!-- Settings Dropdown -->
-<div class="ms-3 relative">
+<div class="flex ms-3 relative space-x-3">
+    @can('viewAdmin',App\Models\User::class)
+        <x-nav-link :navigate='false' href="{{ route('filament.1.auth.login') }}" :active="request()->routeIs('filament.1.auth.login')">
+            {{ __('Admin') }}
+        </x-nav-link>
+    @endcan
     <x-dropdown align="right" width="48">
         <x-slot name="trigger">
             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
