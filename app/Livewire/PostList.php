@@ -39,6 +39,9 @@ class PostList extends Component
         return ($this->search == '' && empty(request('category')))
                 ?
                  (Post::published()
+                        ->with('user','categories') // Eager Loading For user Relationship.
+                                       //load user data in one big query instead one by one
+                                       // Drawback : Perform query if you 're not using it
                         ->when($this->popular, function ($query) {
                             $query->popular();
                         })
@@ -46,6 +49,9 @@ class PostList extends Component
                         ->paginate(3))
                 :
                 (Post::published()
+                        ->with('user','categories') // Eager Loading For user Relationship.
+                                       //load user data in one big query instead one by one
+                                       // Drawback : Perform query if you 're not using it
                         ->when($this->activeCategory, function ($query) {
                             $query->withCategory($this->category);
                         })
@@ -62,6 +68,9 @@ class PostList extends Component
     #[Computed()]
     public function activeCategory()
     {
+        if($this->category == null || $this->category == ''){
+            return null;
+        }
         return Category::where('title', $this->category)->first();
         // title should be slug in production it's Development
     }
