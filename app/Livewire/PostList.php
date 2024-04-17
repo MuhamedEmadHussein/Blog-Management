@@ -20,6 +20,9 @@ class PostList extends Component
     #[Url()]
     public $search = '';
     #[Url()]
+    public $popular = false;
+
+    #[Url()]
     public $category = '';
     public function setSortDir($dir){
         $this->sortDir = $dir == 'asc' ? 'asc' : 'desc';
@@ -36,15 +39,22 @@ class PostList extends Component
         return ($this->search == '' && empty(request('category')))
                 ?
                  (Post::published()
+                        ->when($this->popular, function ($query) {
+                            $query->popular();
+                        })
                         ->orderBy('published_at',$this->sortDir)
                         ->paginate(3))
                 :
                 (Post::published()
-                        ->orderBy('published_at', $this->sortDir)
                         ->when($this->activeCategory, function ($query) {
                             $query->withCategory($this->category);
                         })
-                        ->where('title', 'like', "%{$this->search}%")
+                        ->when($this->popular, function ($query) {
+                            $query->popular();
+
+                        })
+                        ->search($this->search)
+                        ->orderBy('published_at', $this->sortDir)
                         ->paginate(3));
 
     }

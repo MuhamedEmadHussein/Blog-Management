@@ -14,6 +14,8 @@
             @endif
         </div>
         <div class="flex items-center space-x-4 font-light ">
+            <x-checkbox wire:model.live='popular'/>
+            <x-label>Popular</x-label>
             <button class="text-gray-500 py-4 {{($sortDir == 'desc') ? 'border-b border-gray-700 text-gray-900' : ''}}" wire:click="setSortDir('desc')">Latest</button>
             <button class="text-gray-500 py-4 {{($sortDir == 'asc') ? 'border-b border-gray-700 text-gray-900' : ''}}" wire:click="setSortDir('asc')">Oldest</button>
         </div>
