@@ -10,21 +10,21 @@
                 </x-badge>
             @endif
             @if ($search)
-                Containing : <strong>{{ $search }}</strong>
+            {{ __('blog.containing') }} : <strong>{{ $search }}</strong>
             @endif
         </div>
         <div class="flex items-center space-x-4 font-light ">
             <x-checkbox wire:model.live='popular'/>
-            <x-label>Popular</x-label>
-            <button class="text-gray-500 py-4 {{($sortDir == 'desc') ? 'border-b border-gray-700 text-gray-900' : ''}}" wire:click="setSortDir('desc')">Latest</button>
-            <button class="text-gray-500 py-4 {{($sortDir == 'asc') ? 'border-b border-gray-700 text-gray-900' : ''}}" wire:click="setSortDir('asc')">Oldest</button>
+            <x-label>{{ __('blog.popular') }}</x-label>
+            <button class="text-gray-500 py-4 {{($sortDir == 'desc') ? 'border-b border-gray-700 text-gray-900' : ''}}" wire:click="setSortDir('desc')">{{ __('blog.latest') }}</button>
+            <button class="text-gray-500 py-4 {{($sortDir == 'asc') ? 'border-b border-gray-700 text-gray-900' : ''}}" wire:click="setSortDir('asc')">{{ __('blog.oldest') }}</button>
         </div>
     </div>
     <div class="py-4">
         @foreach ($this->posts as $post)
             <x-posts.post-item wire:key="{{$post->id}}" :post="$post"/>
         @endforeach
-    </div>
+    </div>s
 
     <div>
         {{$this->posts->onEachSide(1)->links()}}
